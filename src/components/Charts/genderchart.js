@@ -7,6 +7,7 @@ import {Doughnut} from 'react-chartjs-2';
 function GenderChart(props) {
   let male = 0;
   let female = 0;
+  let other = 0;
 
   if (!props.data || props.data.length === 0) {
     return <div></div>;
@@ -17,18 +18,20 @@ function GenderChart(props) {
       male++;
     } else if (patient.gender === 'F') {
       female++;
+      else
+        other++;
     }
   });
 
   const chartData = {
     datasets: [
       {
-        data: [male, female],
-        backgroundColor: ['#6497f3', '#ea6e9a'],
+        data: [male, female, other],
+        backgroundColor: ['#6497f3', '#ea6e9a', '#99ffff'],
         label: 'Hola',
       },
     ],
-    labels: ['Male', 'Female'],
+    labels: ['Male', 'Female', 'Other],
   };
 
   const chartOptions = deepmerge(defaultOptions, {
@@ -60,7 +63,7 @@ function GenderChart(props) {
         <Doughnut data={chartData} options={chartOptions} />
       </div>
       <div className="chart-note">
-        Sample size: {formatNumber(male + female)} patients
+        Sample size: {formatNumber(male + female+other)} patients
       </div>
     </div>
   );
